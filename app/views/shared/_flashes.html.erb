@@ -1,0 +1,16 @@
+<% if notice %>
+  <div id="flash-notice" class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative m-3" role="alert">
+    <span class="block sm:inline"><%= notice %></span>
+    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+      <button type="button" aria-label="Close" data-hs-remove-element="#flash-notice" class="text-blue-500">✕</button>
+    </span>
+  </div>
+<% end %>
+<% if alert %>
+  <div id="flash-alert" class="bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative m-3" role="alert">
+    <span class="block sm:inline"><%= alert %></span>
+    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+      <button type="button" aria-label="Close" data-hs-remove-element="#flash-alert" class="text-orange-500">✕</button>
+    </span>
+  </div>
+<% end %>
