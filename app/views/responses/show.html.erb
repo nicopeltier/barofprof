@@ -1,0 +1,14 @@
+<% if @next %>
+<div class="p-6 max-w-xl mx-auto">
+<h2 class="text-lg font-semibold mb-2">Question</h2>
+<p class="mb-4"><%= @next.label %></p>
+<%= form_with url: answer_path(token: @participation.token), method: :post do |f| %>
+<%= hidden_field_tag :question_id, @next.id %>
+<div class="grid grid-cols-5 gap-2 mb-4">
+<% (1..10).each do |n| %>
+<button name="score" value="<%= n %>" class="border rounded px-3 py-2"><%= n %></button>
+<% end %>
+</div>
+<% end %>
+</div>
+<% end %>

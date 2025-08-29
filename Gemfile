@@ -68,3 +68,14 @@ gem "simple_form"
 # --- JS/CSS Bundling (Node) ---
 gem "jsbundling-rails"
 gem "cssbundling-rails"
+
+gem "pundit", "~> 2.5"
+
+gem "roo", "~> 1.13"
+
+gem "sidekiq", "~> 8.0"
+
+gem "prawn", "~> 2.5"
+gem "prawn-table", "~> 0.2.2"
+
+gem "rack-attack", "~> 6.7"

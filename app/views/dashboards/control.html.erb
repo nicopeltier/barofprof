@@ -1,0 +1,16 @@
+<div class="p-6">
+  <h1 class="text-xl font-bold mb-4">Suivi de la campagne</h1>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <% @stats.each do |status, count| %>
+      <div class="border rounded p-4">
+        <div class="text-sm"><%= status %></div>
+        <div class="text-2xl font-semibold"><%= count %></div>
+      </div>
+    <% end %>
+    <% if @stats.blank? %>
+      <div class="col-span-2 md:col-span-4 text-slate-500">
+        Aucune campagne en cours.
+      </div>
+    <% end %>
+  </div>
+</div>
