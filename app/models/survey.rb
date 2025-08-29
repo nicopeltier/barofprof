@@ -4,6 +4,5 @@ class Survey < ApplicationRecord
   has_many :themes, through: :survey_themes
   has_many :participations, dependent: :destroy
   
-  
   enum status: { draft: 0, launched: 1, closed: 2 }
-  end
+end
