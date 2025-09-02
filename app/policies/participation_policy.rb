@@ -3,7 +3,7 @@ class ParticipationPolicy < ApplicationPolicy
     def index?  = in_school?
     def show?   = in_school?
     def update? = in_school?     # ex. relances manuelles
-    def destroy?= admin?
+    def destroy? = admin?
   
     class Scope < Scope
       def resolve
@@ -20,4 +20,3 @@ class ParticipationPolicy < ApplicationPolicy
       admin? || @record.survey.school.school_directors.exists?(user_id: @user.id)
     end
   end
-  
