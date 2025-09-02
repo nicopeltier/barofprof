@@ -9,10 +9,8 @@ default: &default
       polling_interval: 0.1
 
 development:
-  <<: *default
-
+  database: primary
 test:
-  <<: *default
-
+  database: primary
 production:
-  <<: *default
+  database: primary

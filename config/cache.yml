@@ -6,11 +6,8 @@ default: &default
     namespace: <%= Rails.env %>
 
 development:
-  <<: *default
-
+  database: primary
 test:
-  <<: *default
-
+  database: primary
 production:
-  database: cache
-  <<: *default
+  database: primary
