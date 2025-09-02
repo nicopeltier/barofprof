@@ -1,4 +1,4 @@
-class Backoffice::ThemesController < Admin::BaseController
+class Backoffice::ThemesController < Backoffice::BaseController
   def index
     @themes = Theme.all
   end
@@ -7,20 +7,20 @@ class Backoffice::ThemesController < Admin::BaseController
   end
   def create
     @theme = Theme.new(theme_params)
-    if @theme.save then redirect_to backoffice_theme_path, notice: "Thématique créée"
+    if @theme.save then redirect_to backoffice_themes_path, notice: "Thématique créée"
     else render :new, status: :unprocessable_entity
     end
     end
     def edit; @theme = Theme.find(params[:id]); end
     def update
       @theme = Theme.find(params[:id])
-      if @theme.update(theme_params) then redirect_to backoffice_theme_path, notice: "Mis à jour"
+      if @theme.update(theme_params) then redirect_to backoffice_themes_path, notice: "Mis à jour"
       else render :edit, status: :unprocessable_entity
       end
       end
       def destroy
         Theme.find(params[:id]).destroy
-        redirect_to backoffice_theme_path, notice: "Supprimée"
+        redirect_to backoffice_themes_path, notice: "Supprimée"
       end
       private
       def theme_params

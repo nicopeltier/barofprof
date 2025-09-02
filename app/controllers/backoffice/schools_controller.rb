@@ -1,4 +1,4 @@
-class Backoffice::SchoolsController < Admin::BaseController
+class Backoffice::SchoolsController < Backoffice::BaseController
   def index
   @schools = School.all
   end
@@ -6,20 +6,20 @@ class Backoffice::SchoolsController < Admin::BaseController
   def new; @school = School.new; end
   def create
   @school = School.new(school_params)
-  if @school.save then redirect_to admin_schools_path, notice: "École créée"
+  if @school.save then redirect_to backoffice_schools_path, notice: "École créée"
   else render :new, status: :unprocessable_entity
   end
   end
   def edit; @school = School.find(params[:id]); end
   def update
   @school = School.find(params[:id])
-  if @school.update(school_params) then redirect_to admin_schools_path, notice: "Mis à jour"
+  if @school.update(school_params) then redirect_to backoffice_schools_path, notice: "Mis à jour"
   else render :edit, status: :unprocessable_entity
   end
   end
   def destroy
   School.find(params[:id]).destroy
-  redirect_to admin_schools_path, notice: "Supprimée"
+  redirect_to backoffice_schools_path, notice: "Supprimée"
   end
   def impersonate
   session[:impersonated_school_id] = params[:id]
@@ -27,7 +27,7 @@ class Backoffice::SchoolsController < Admin::BaseController
   end
   def stop_impersonating
   session.delete(:impersonated_school_id)
-  redirect_to admin_schools_path, notice: "Impersonation arrêtée"
+  redirect_to backoffice_schools_path, notice: "Impersonation arrêtée"
   end
   private
   def school_params

@@ -1,2 +1,100 @@
-<h1>Admin::Schools#index</h1>
-<p>Find me in app/views/admin/schools/index.html.erb</p>
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold text-gray-900 dark:text-white">Gestion des Écoles</h1>
+      <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Liste de toutes les écoles dans le système avec leurs statuts.</p>
+    </div>
+    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+      <%= link_to "Nouvelle école", new_backoffice_school_path,
+            class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+    </div>
+  </div>
+  
+  <div class="mt-8 flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-800">
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">École</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Statut</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Directeurs</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Professeurs</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Campagnes</th>
+                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                  <span class="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
+              <% @schools.each do |school| %>
+                <tr>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-white sm:pl-6">
+                    <%= school.name %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                    <% status = school.respond_to?(:status) ? school.status : 'Créé' %>
+                    <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset
+                      <%= case status
+                          when 'Créé' then 'bg-gray-50 text-gray-600 ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20'
+                          when 'Directeur(s) invités' then 'bg-yellow-50 text-yellow-800 ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20'
+                          when 'Directeurs connectés' then 'bg-blue-50 text-blue-700 ring-blue-700/10 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/30'
+                          when 'Questionnaire' then 'bg-indigo-50 text-indigo-700 ring-indigo-700/10 dark:bg-indigo-400/10 dark:text-indigo-400 dark:ring-indigo-400/30'
+                          when 'Clôturé' then 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20'
+                          else 'bg-gray-50 text-gray-600 ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20'
+                          end %>">
+                      <%= status %>
+                    </span>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                    <%= school.respond_to?(:school_directors) ? school.school_directors.count : 0 %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                    <%= school.respond_to?(:teachers) ? school.teachers.count : 0 %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                    <%= school.respond_to?(:surveys) ? school.surveys.count : 0 %>
+                  </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <div class="flex justify-end gap-2">
+                      <%= link_to "Voir", backoffice_school_path(school),
+                            class: "text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" %>
+                      <%= link_to "Modifier", edit_backoffice_school_path(school),
+                            class: "text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" %>
+                      <%= link_to "Se connecter", impersonate_backoffice_school_path(school),
+                            method: :post,
+                            class: "text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300" %>
+                      <%= link_to "Supprimer", backoffice_school_path(school),
+                            method: :delete,
+                            data: { confirm: "Êtes-vous sûr de vouloir supprimer cette école ? Toutes les données associées seront perdues." },
+                            class: "text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300" %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+              
+              <% if @schools.empty? %>
+                <tr>
+                  <td colspan="6" class="px-6 py-14 text-center text-sm">
+                    <div class="text-gray-900 dark:text-white">
+                      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-2m-2 0H7m5 0v-5a2 2 0 00-2-2H8a2 2 0 00-2 2v5m5 0V9a2 2 0 012-2h2a2 2 0 012 2v10" />
+                      </svg>
+                      <h3 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">Aucune école</h3>
+                      <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Commencez par créer votre première école.</p>
+                      <div class="mt-6">
+                        <%= link_to "Nouvelle école", new_backoffice_school_path,
+                              class: "inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
