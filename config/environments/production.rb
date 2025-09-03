@@ -67,12 +67,12 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
 
-  # SMTP configuration for production
+  # SMTP configuration for production using environment variables
   config.action_mailer.smtp_settings = {
-    user_name: Rails.application.credentials.dig(:smtp, :user_name),
-    password: Rails.application.credentials.dig(:smtp, :password),
-    address: Rails.application.credentials.dig(:smtp, :address) || "smtp.gmail.com",
-    port: Rails.application.credentials.dig(:smtp, :port) || 587,
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    address: ENV['SMTP_ADDRESS'] || "smtp.gmail.com",
+    port: ENV['SMTP_PORT'] || 587,
     authentication: :plain,
     enable_starttls_auto: true,
     domain: 'peps.school'
