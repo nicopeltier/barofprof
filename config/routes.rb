@@ -34,9 +34,9 @@ Rails.application.routes.draw do
   # (si tu fais simple avec current_school il n'est pas nécessaire de nester sous :schools)
   resources :surveys, only: [ :new, :create, :show ] do
     member do
-      post :launch
+      patch :launch
       post :remind
-      post :close
+      patch :close
       get  :report
     end
   end

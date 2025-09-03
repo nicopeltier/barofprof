@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Baroprof - Questionnaire</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  </head>
+
+  <body class="bg-gray-50 dark:bg-gray-900">
+    <div class="min-h-screen flex flex-col">
+      <!-- Header simple -->
+      <header class="bg-white dark:bg-gray-800 shadow-sm">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex h-16 items-center justify-between">
+            <div class="flex items-center">
+              <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Baroprof</h1>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Contenu principal -->
+      <main class="flex-1">
+        <%= yield %>
+      </main>
+
+      <!-- Footer simple -->
+      <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+            © <%= Date.current.year %> Baroprof - Questionnaire de climat scolaire
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

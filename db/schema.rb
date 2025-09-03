@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_03_005633) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_03_115413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,7 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_03_005633) do
 
   create_table "participations", force: :cascade do |t|
     t.bigint "survey_id", null: false
-    t.bigint "teacher_id", null: false
+    t.bigint "teacher_id"
     t.string "token"
     t.integer "status"
     t.datetime "opened_at"
@@ -149,6 +149,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_03_005633) do
     t.boolean "archived"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "response_token"
+    t.index ["response_token"], name: "index_teachers_on_response_token", unique: true
     t.index ["school_id"], name: "index_teachers_on_school_id"
   end
 

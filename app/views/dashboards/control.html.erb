@@ -109,6 +109,80 @@
       </div>
     </div>
 
+    <!-- Boutons de pilotage -->
+    <% current_survey = @school.surveys.order(created_at: :desc).first %>
+    <% unless current_survey %>
+      <div class="mt-8">
+        <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Lancer le sondage</h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
+              <p>Aucun questionnaire n'existe encore pour cette école. Cliquez sur lancer pour envoyer le sondage aux professeurs.</p>
+            </div>
+            <div class="mt-5">
+              <%= form_with url: surveys_path, method: :post, local: true do |form| %>
+                <%= form.submit "Lancer le sondage",
+                      data: { 
+                        "turbo-confirm": "Êtes-vous sûr de vouloir lancer le sondage ? Les emails d'invitation seront envoyés à tous les professeurs."
+                      },
+                      class: "inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if current_survey %>
+      <div class="mt-8">
+        <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Pilotage du questionnaire</h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
+              <p>Gérez le lancement et la clôture de votre questionnaire.</p>
+            </div>
+            <div class="mt-5 flex flex-col sm:flex-row gap-3">
+              <% if current_survey.draft? %>
+                <%= link_to launch_survey_path(current_survey),
+                      data: { 
+                        "turbo-method": "patch",
+                        "turbo-confirm": "Êtes-vous sûr de vouloir lancer le questionnaire ? Les emails d'invitation seront envoyés à tous les professeurs."
+                      },
+                      class: "inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" do %>
+                  <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M3.105 2.289a.75.75 0 00-.826.95l1.414 4.925A1.5 1.5 0 005.135 9.25h6.115a.75.75 0 010 1.5H5.135a1.5 1.5 0 00-1.442 1.086l-1.414 4.926a.75.75 0 00.826.95 28.896 28.896 0 0015.293-7.154.75.75 0 000-1.115A28.896 28.896 0 003.105 2.289z" />
+                  </svg>
+                  Lancer le questionnaire
+                <% end %>
+              <% elsif current_survey.launched? %>
+                <%= link_to close_survey_path(current_survey),
+                      data: { 
+                        "turbo-method": "patch",
+                        "turbo-confirm": "Êtes-vous sûr de vouloir clôturer le questionnaire ? Les professeurs ne pourront plus répondre."
+                      },
+                      class: "inline-flex items-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" do %>
+                  <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                  </svg>
+                  Clôturer le questionnaire
+                <% end %>
+              <% elsif current_survey.closed? %>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                  <p>Le questionnaire est clôturé.</p>
+                </div>
+                <%= link_to report_survey_path(current_survey),
+                      class: "inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600" do %>
+                  <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M4.5 2A1.5 1.5 0 003 3.5v13A1.5 1.5 0 004.5 18h11a1.5 1.5 0 001.5-1.5V7.621a1.5 1.5 0 00-.44-1.06l-4.12-4.122A1.5 1.5 0 0011.378 2H4.5zm2.25 8.5a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm0 3a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z" clip-rule="evenodd" />
+                  </svg>
+                  Télécharger le rapport
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
     <!-- Campagnes récentes -->
     <% if @school.respond_to?(:surveys) && @school.surveys.any? %>
       <div class="mt-8">

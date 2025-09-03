@@ -5,11 +5,5 @@ class Participation < ApplicationRecord
   
   enum :status, { not_opened: 0, opened: 1, in_progress: 2, completed: 3 }
   
-  before_validation :ensure_token
-  
-  private
-  
-  def ensure_token
-    self.token ||= SecureRandom.base58(24)
-  end
+  # Token sera défini manuellement lors de la création via teacher.response_token
 end
