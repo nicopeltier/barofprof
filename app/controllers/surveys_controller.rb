@@ -91,19 +91,17 @@ class SurveysController < ApplicationController
       require 'prawn'
       
       Prawn::Document.new do |pdf|
-        # Titre principal
-        pdf.text "Rapport du Questionnaire", size: 24, style: :bold, align: :center
+        # Zone 1: Titre principal modifié
+        pdf.text "Questionnaire sur le bien-être du corps enseignant", size: 24, style: :bold, align: :center
         pdf.move_down 20
         
-        # Informations générales
-        pdf.text "École : #{survey.school.name}", size: 16, style: :bold
-        pdf.text "Campagne ##{survey.id}", size: 14
-        pdf.text "Statut : #{survey.status.humanize}", size: 12
+        # Zone 2: Informations générales (sans statut)
+        pdf.text "École : #{survey.school.name}", size: 14
         pdf.text "Créé le : #{survey.created_at.strftime('%d/%m/%Y')}", size: 12
         pdf.text "Clôturé le : #{survey.closed_at&.strftime('%d/%m/%Y') || 'N/A'}", size: 12
         pdf.move_down 30
         
-        # Statistiques de participation
+        # Zone 3: Statistiques de participation avec moyenne globale
         total_participations = survey.participations.count
         completed_participations = survey.participations.where(status: 'completed').count
         
@@ -112,26 +110,37 @@ class SurveysController < ApplicationController
         pdf.text "Total des invitations : #{total_participations}", size: 12
         pdf.text "Questionnaires complétés : #{completed_participations}", size: 12
         pdf.text "Taux de participation : #{total_participations > 0 ? (completed_participations.to_f / total_participations * 100).round(1) : 0}%", size: 12
+        
+        # Calcul et affichage de la moyenne globale
+        if survey.question_responses.any?
+          global_avg = survey.question_responses.average(:score).to_f.round(2)
+          pdf.text "Moyenne globale : #{global_avg}/10", size: 12, style: :bold
+        end
         pdf.move_down 30
         
-        # Résultats par thème
+        # Zone 4: Résultats par question (organisés par thème)
         if survey.question_responses.any?
-          pdf.text "Résultats par Thème", size: 18, style: :bold
+          pdf.text "Résultats par Question", size: 18, style: :bold
           pdf.move_down 10
           
           survey.themes.order(:number).each do |theme|
-            pdf.text theme.name, size: 14, style: :bold
+            # Vérifier si le thème a des réponses
+            theme_responses = survey.question_responses.joins(:question).where(questions: { theme_id: theme.id })
+            next unless theme_responses.any?
+            
+            # Nom du thème et moyenne
+            theme_avg = theme_responses.average(:score).to_f.round(2)
+            pdf.text theme.name, size: 12, style: :bold
+            pdf.text "Moyenne du thème : #{theme_avg}/10", size: 10, style: :bold
             pdf.move_down 5
             
-            theme_responses = survey.question_responses.joins(:question).where(questions: { theme_id: theme.id })
-            if theme_responses.any?
-              avg_score = theme_responses.average(:score).to_f.round(2)
-              response_count = theme_responses.count
-              
-              pdf.text "Score moyen : #{avg_score}/10", size: 12
-              pdf.text "Nombre de réponses : #{response_count}", size: 12
-            else
-              pdf.text "Aucune réponse pour ce thème", size: 12, style: :italic
+            # Questions du thème avec leurs moyennes
+            theme.questions.order(:position).each do |question|
+              question_responses = survey.question_responses.where(question_id: question.id)
+              if question_responses.any?
+                question_avg = question_responses.average(:score).to_f.round(1)
+                pdf.text "#{question_avg}/10 : #{question.label}", size: 10
+              end
             end
             pdf.move_down 15
           end

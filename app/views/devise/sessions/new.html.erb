@@ -4,8 +4,10 @@
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <%= image_tag "logo_peps.png", alt: "Baroprof", class: "mx-auto h-10 w-auto dark:hidden" %>
     <%= image_tag "logo_peps.png", alt: "Baroprof", class: "mx-auto h-10 w-auto not-dark:hidden" %>
-    <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">Connectez-vous à votre compte</h2>
+    <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">Baromètre climat scolaire<br>Corps enseignant</h2>
+<h4 class="mt-10 text-center text-2l/9 font-bold tracking-tight text-gray-900 dark:text-white">Connectez-vous à votre compte</h4>
   </div>
+
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <%= form_with scope: resource_name, url: session_path(resource_name), class: "space-y-6", html: { method: :post } do |f| %>
@@ -42,11 +44,5 @@
       </div>
     <% end %>
 
-    <p class="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
-      Pas encore membre ?
-      <% if devise_mapping.registerable? %>
-        <%= link_to "Créer un compte", new_registration_path(resource_name), class: "font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300" %>
-      <% end %>
-    </p>
   </div>
 </div>

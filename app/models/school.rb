@@ -19,7 +19,7 @@ class School < ApplicationRecord
   end
 
   def can_modify_themes?
-    # Ne peut pas modifier si une enquête est lancée
-    !surveys.launched.exists?
+    # Ne peut pas modifier si une enquête est lancée ou clôturée
+    !surveys.where(status: ['launched', 'closed']).exists?
   end
 end

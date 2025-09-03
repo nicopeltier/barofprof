@@ -71,7 +71,8 @@ gem "cssbundling-rails"
 
 gem "pundit", "~> 2.5"
 
-gem "roo", "~> 1.13"
+gem "roo", "~> 2.10"
+gem "csv"
 
 gem "sidekiq", "~> 8.0"
 

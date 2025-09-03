@@ -28,7 +28,11 @@
               Modification impossible
             </h3>
             <div class="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
-              <p>Les thèmes ne peuvent plus être modifiés car une enquête est en cours.</p>
+              <% 
+                current_survey = @school.surveys.order(created_at: :desc).first
+                survey_status_text = current_survey&.status == 'launched' ? 'en cours' : 'clôturée'
+              %>
+              <p>Les thèmes ne peuvent plus être modifiés car une enquête est <%= survey_status_text %>.</p>
             </div>
           </div>
         </div>

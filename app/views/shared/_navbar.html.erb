@@ -123,11 +123,6 @@
                 <%= link_to "Votre profil", (defined?(edit_user_registration_path) ? edit_user_registration_path : "#"),
                       class: "block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden dark:text-gray-300 dark:focus:bg:white/5" %>
 
-                <% if current_user.admin? %>
-                  <div class="my-1 border-t border-gray-200 dark:border-white/10"></div>
-                  <%= link_to "Backoffice", backoffice_schools_path,
-                        class: "block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden dark:text-gray-300 dark:focus:bg-white/5" %>
-                <% end %>
 
                 <div class="my-1 border-t border-gray-200 dark:border-white/10"></div>
                 <%= link_to "Se déconnecter", destroy_user_session_path,
