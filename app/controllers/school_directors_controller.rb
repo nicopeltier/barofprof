@@ -30,14 +30,14 @@ class SchoolDirectorsController < ApplicationController
     
     # Vérifier que l'utilisateur n'est pas déjà directeur de cette école
     if @school.school_directors.exists?(user: user)
-      redirect_to school_directors_path, alert: 'Cet utilisateur est déjà directeur de cette école.'
+      redirect_to school_directors_path, alert: t('directors.already_director')
       return
     end
     
     @school_director = @school.school_directors.build(user: user)
     
     if @school_director.save
-      redirect_to school_directors_path, notice: 'Directeur ajouté avec succès.'
+      redirect_to school_directors_path, notice: t('directors.added_successfully')
     else
       render :new, status: :unprocessable_entity
     end
@@ -49,7 +49,7 @@ class SchoolDirectorsController < ApplicationController
 
   def update
     if @school_director.update(school_director_params)
-      redirect_to school_directors_path, notice: 'Directeur modifié avec succès.'
+      redirect_to school_directors_path, notice: t('directors.modified_successfully')
     else
       @available_users = available_users_for_director(@school_director.user)
       render :edit, status: :unprocessable_entity
@@ -58,7 +58,7 @@ class SchoolDirectorsController < ApplicationController
 
   def destroy
     @school_director.destroy
-    redirect_to school_directors_path, notice: 'Directeur supprimé avec succès.'
+    redirect_to school_directors_path, notice: t('directors.removed_successfully')
   end
 
   def invite
@@ -71,7 +71,7 @@ class SchoolDirectorsController < ApplicationController
     # Envoyer l'email d'invitation
     DirectorMailer.invitation_email(@school_director).deliver_now
     
-    redirect_to school_directors_path, notice: 'Invitation envoyée avec succès.'
+    redirect_to school_directors_path, notice: t('directors.invitation_sent_successfully')
   end
 
   def resend_invitation
@@ -81,7 +81,7 @@ class SchoolDirectorsController < ApplicationController
     # Renvoyer l'email d'invitation
     DirectorMailer.invitation_email(@school_director).deliver_now
     
-    redirect_to school_directors_path, notice: 'Invitation renvoyée avec succès.'
+    redirect_to school_directors_path, notice: t('directors.invitation_resent_successfully')
   end
   
   private

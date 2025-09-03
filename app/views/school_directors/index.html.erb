@@ -1,11 +1,11 @@
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
   <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold text-gray-900">Directeurs</h1>
-      <p class="mt-2 text-sm text-gray-700">Liste des directeurs de l'école</p>
+      <h1 class="text-base font-semibold text-gray-900"><%= t('directors.title') %></h1>
+      <p class="mt-2 text-sm text-gray-700"><%= t('directors.list') %></p>
     </div>
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-      <%= link_to "Ajouter un directeur", new_school_director_path, class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+      <%= link_to t('directors.add'), new_school_director_path, class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
     </div>
   </div>
 
@@ -16,8 +16,8 @@
           <table class="min-w-full divide-y divide-gray-300">
             <thead>
               <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Email</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Statut</th>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"><%= t('directors.email') %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= t('directors.status') %></th>
                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
                   <span class="sr-only">Actions</span>
                 </th>
@@ -31,22 +31,26 @@
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     <% if school_director.invitation_accepted? %>
-                      <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700">Connecté</span>
+                      <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700">
+                        <%= t('directors.connected', date: school_director.invitation_accepted_at.strftime("%d/%m/%Y")) %>
+                      </span>
                     <% elsif school_director.invitation_pending? %>
-                      <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800">Invitation envoyée</span>
+                      <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800">
+                        <%= t('directors.invitation_sent', date: school_director.invited_at.strftime("%d/%m/%Y")) %>
+                      </span>
                     <% else %>
-                      <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600">Non invité</span>
+                      <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600"><%= t('directors.not_invited') %></span>
                     <% end %>
                   </td>
                   <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                     <% if !school_director.invited? %>
-                      <%= link_to "Inviter", invite_school_director_path(school_director), data: { "turbo-method": "post" }, class: "text-green-600 hover:text-green-900" %>
+                      <%= link_to t('directors.invite'), invite_school_director_path(school_director), data: { "turbo-method": "post" }, class: "text-green-600 hover:text-green-900" %>
                     <% end %>
                     <% if school_director.invitation_pending? %>
-                      <%= link_to "Renvoyer", resend_invitation_school_director_path(school_director), data: { "turbo-method": "post" }, class: "text-blue-600 hover:text-blue-900" %>
+                      <%= link_to t('directors.resend'), resend_invitation_school_director_path(school_director), data: { "turbo-method": "post" }, class: "text-blue-600 hover:text-blue-900" %>
                     <% end %>
-                    <%= link_to "Modifier", edit_school_director_path(school_director), class: "ml-4 text-indigo-600 hover:text-indigo-900" %>
-                    <%= link_to "Supprimer", school_director_path(school_director), data: { "turbo-method": "delete", "turbo-confirm": "Êtes-vous sûr ?" }, class: "ml-4 text-red-600 hover:text-red-900" %>
+                    <%= link_to t('directors.modify'), edit_school_director_path(school_director), class: "ml-4 text-indigo-600 hover:text-indigo-900" %>
+                    <%= link_to t('directors.remove'), school_director_path(school_director), data: { "turbo-method": "delete", "turbo-confirm": t('confirm') }, class: "ml-4 text-red-600 hover:text-red-900" %>
                   </td>
                 </tr>
               <% end %>
@@ -54,10 +58,10 @@
           </table>
         <% else %>
           <div class="text-center py-12">
-            <h3 class="mt-2 text-sm font-semibold text-gray-900">Aucun directeur</h3>
-            <p class="mt-1 text-sm text-gray-500">Commencez par ajouter un directeur à cette école.</p>
+            <h3 class="mt-2 text-sm font-semibold text-gray-900"><%= t('directors.no_directors') %></h3>
+            <p class="mt-1 text-sm text-gray-500"><%= t('directors.start_by_adding') %></p>
             <div class="mt-6">
-              <%= link_to "Ajouter un directeur", new_school_director_path, class: "inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+              <%= link_to t('directors.add'), new_school_director_path, class: "inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
             </div>
           </div>
         <% end %>

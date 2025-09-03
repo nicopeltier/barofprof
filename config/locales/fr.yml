@@ -1,0 +1,96 @@
+fr:
+  hello: "Bonjour le monde"
+  
+  # Messages généraux
+  actions: "Actions"
+  edit: "Modifier"
+  delete: "Supprimer"
+  cancel: "Annuler"
+  save: "Enregistrer"
+  create: "Créer"
+  update: "Mettre à jour"
+  back: "Retour"
+  show: "Afficher"
+  confirm: "Êtes-vous sûr ?"
+  yes: "Oui"
+  no: "Non"
+  
+  # Navigation
+  dashboard: "Tableau de bord"
+  schools: "Écoles"
+  directors: "Directeurs"
+  teachers: "Professeurs"
+  surveys: "Enquêtes"
+  settings: "Paramètres"
+  
+  # Messages de succès
+  created_successfully: "Créé avec succès"
+  updated_successfully: "Mis à jour avec succès"
+  deleted_successfully: "Supprimé avec succès"
+  
+  # Messages d'erreur
+  error_occurred: "Une erreur s'est produite"
+  not_found: "Non trouvé"
+  access_denied: "Accès refusé"
+  
+  # Directeurs
+  directors:
+    title: "Directeurs"
+    list: "Liste des directeurs de l'école"
+    add: "Ajouter un directeur"
+    invite: "Inviter"
+    resend: "Renvoyer"
+    modify: "Modifier"
+    remove: "Supprimer"
+    email: "Email"
+    status: "Statut"
+    not_invited: "Non invité"
+    invitation_sent: "Invitation envoyée le %{date}"
+    connected: "Connexion le %{date}"
+    no_directors: "Aucun directeur"
+    start_by_adding: "Commencez par ajouter un directeur à cette école."
+    already_director: "Cet utilisateur est déjà directeur de cette école."
+    added_successfully: "Directeur ajouté avec succès."
+    modified_successfully: "Directeur modifié avec succès."
+    removed_successfully: "Directeur supprimé avec succès."
+    invitation_sent_successfully: "Invitation envoyée avec succès."
+    invitation_resent_successfully: "Invitation renvoyée avec succès."
+    
+  # Professeurs
+  teachers:
+    title: "Professeurs"
+    list: "Liste des professeurs"
+    add: "Ajouter un professeur"
+    import: "Importer"
+    
+  # Enquêtes
+  surveys:
+    title: "Enquêtes"
+    new: "Nouvelle enquête"
+    launch: "Lancer"
+    remind: "Relancer"
+    close: "Fermer"
+    report: "Rapport"
+    
+  # École
+  school:
+    name: "Nom de l'école"
+    settings: "Paramètres de l'école"
+    no_school_assigned: "Aucune école assignée à votre compte."
+    no_school_selected: "Aucune école sélectionnée."
+    access_denied: "Vous n'avez pas accès aux paramètres de cette école."
+    settings_updated: "Paramètres de l'école mis à jour avec succès."
+    theme_updated: "Thème mis à jour avec succès."
+    theme_update_failed: "Erreur lors de la mise à jour du thème."
+    cannot_modify_themes: "Impossible de modifier les thèmes car une enquête est en cours."
+    
+  # Campagnes
+  campaigns:
+    new: "Nouvelle campagne"
+    
+  # Dates et temps
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d %b"
+      long: "%d %B %Y"

@@ -6,6 +6,7 @@ class DirectorMailer < ApplicationMailer
     @school = school_director.school
     @user = school_director.user
     @login_url = "https://baroprof.peps.school/users/sign_in"
+    @invitation_url = "https://baroprof.peps.school/users/sign_in"
     
     mail(
       to: @user.email,

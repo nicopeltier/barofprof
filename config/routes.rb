@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   
   # Page d'accueil et dashboard directeur
-  root to: "pages#home"
+  root to: "dashboards#index"
   get "dashboard", to: "dashboards#control"
   
   # Lien public professeur (par token)
@@ -55,7 +55,9 @@ Rails.application.routes.draw do
     end
   end
   
-  resource :school_settings, only: [ :edit, :update ]
+  resource :school_settings, only: [ :edit, :update ] do
+    patch :toggle_theme
+  end
   
   # Healthcheck
   get "up" => "rails/health#show", as: :rails_health_check

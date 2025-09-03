@@ -7,9 +7,12 @@ class ApplicationController < ActionController::Base
   def current_school
     if session[:impersonated_school_id]
       School.find(session[:impersonated_school_id])
+    elsif current_user&.admin?
+      # Admin sans impersonation : pas d'école par défaut
+      nil
     else
-      # à remplacer par la logique école↔directeur si nécessaire
-      School.first
+      # Directeur : récupérer son école
+      current_user&.school_directors&.first&.school
     end
   end
 

@@ -51,20 +51,23 @@
                       class: "text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" %>
               </div>
               
+              <%= link_to "Dashboard", dashboard_path,
+                    class: "#{link_base} #{active_classes(current_page?(dashboard_path))}" %>
+              
               <%= link_to "Directeurs", school_directors_path,
                     class: "#{link_base} #{active_classes(controller_path == 'school_directors')}" %>
               
               <%= link_to "Professeurs", teachers_path,
                     class: "#{link_base} #{active_classes(controller_path == 'teachers')}" %>
+              
+              <%= link_to "Paramètres", edit_school_settings_path,
+                    class: "#{link_base} #{active_classes(controller_path == 'school_settings')}" %>
             <% else %>
               <%= link_to "Écoles", backoffice_schools_path,
                     class: "#{link_base} #{active_classes(controller_path.start_with?('backoffice/'))}" %>
               
               <%= link_to "Thématiques", backoffice_themes_path,
                     class: "#{link_base} #{active_classes(controller_path == 'backoffice/themes')}" %>
-              
-              <%= link_to "Admin UI", (respond_to?(:trestle_admin_path) ? trestle_admin_path : "/admin"),
-                    class: "#{link_base} border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white" %>
             <% end %>
           <% else %>
             <%# Navigation Directeur %>
@@ -135,8 +138,6 @@
                   <div class="my-1 border-t border-gray-200 dark:border-white/10"></div>
                   <%= link_to "Backoffice", backoffice_schools_path,
                         class: "block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden dark:text-gray-300 dark:focus:bg-white/5" %>
-                  <%= link_to "Admin UI", (respond_to?(:trestle_admin_path) ? trestle_admin_path : "/admin"),
-                        class: "block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden dark:text-gray-300 dark:focus:bg-white/5" %>
                 <% end %>
 
                 <div class="my-1 border-t border-gray-200 dark:border-white/10"></div>
@@ -185,20 +186,23 @@
                   class: "ml-2 text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" %>
           </div>
           
+          <%= link_to 'Dashboard', dashboard_path,
+                class: "block border-l-4 #{current_page?(dashboard_path) ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-600/10 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'} sm:pr-6 sm:pl-5 py-2 pr-4 pl-3 text-base font-medium dark:text-gray-300 dark:hover:border-white/20 dark:hover:bg:white/5 dark:hover:text-white" %>
+          
           <%= link_to 'Directeurs', school_directors_path,
                 class: "block border-l-4 #{controller_path == 'school_directors' ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-600/10 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'} sm:pr-6 sm:pl-5 py-2 pr-4 pl-3 text-base font-medium dark:text-gray-300 dark:hover:border-white/20 dark:hover:bg:white/5 dark:hover:text-white" %>
           
           <%= link_to 'Professeurs', teachers_path,
                 class: "block border-l-4 #{controller_path == 'teachers' ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-600/10 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'} sm:pr-6 sm:pl-5 py-2 pr-4 pl-3 text-base font-medium dark:text-gray-300 dark:hover:border-white/20 dark:hover:bg:white/5 dark:hover:text-white" %>
+          
+          <%= link_to 'Paramètres', edit_school_settings_path,
+                class: "block border-l-4 #{controller_path == 'school_settings' ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-600/10 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'} sm:pr-6 sm:pl-5 py-2 pr-4 pl-3 text-base font-medium dark:text-gray-300 dark:hover:border-white/20 dark:hover:bg:white/5 dark:hover:text-white" %>
         <% else %>
           <%= link_to 'Écoles', backoffice_schools_path,
                 class: "block border-l-4 #{controller_path.start_with?('backoffice/') ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-600/10 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'} sm:pr-6 sm:pl-5 py-2 pr-4 pl-3 text-base font-medium dark:text-gray-300 dark:hover:border-white/20 dark:hover:bg:white/5 dark:hover:text-white" %>
           
           <%= link_to 'Thématiques', backoffice_themes_path,
                 class: "block border-l-4 #{controller_path == 'backoffice/themes' ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-600/10 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800'} sm:pr-6 sm:pl-5 py-2 pr-4 pl-3 text-base font-medium dark:text-gray-300 dark:hover:border-white/20 dark:hover:bg:white/5 dark:hover:text-white" %>
-
-          <%= link_to 'Admin UI', (respond_to?(:trestle_admin_path) ? trestle_admin_path : '/admin'),
-                class: "block border-l-4 border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 sm:pr-6 sm:pl-5 py-2 pr-4 pl-3 text-base font-medium dark:text-gray-300 dark:hover:border-white/20 dark:hover:bg:white/5 dark:hover:text-white" %>
         <% end %>
       <% end %>
     </div>
