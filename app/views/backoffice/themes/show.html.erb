@@ -1,0 +1,118 @@
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-4xl">
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-bold leading-7 text-gray-900 dark:text-white">
+            Thématique : <%= @theme.name %>
+          </h1>
+          <p class="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
+            Détails de la thématique et questions associées
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <%= link_to "Modifier", edit_backoffice_theme_path(@theme),
+                class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+          <%= link_to "Supprimer", backoffice_theme_path(@theme),
+                data: { 
+                  "turbo-method": "delete",
+                  "turbo-confirm": "Êtes-vous sûr de vouloir supprimer cette thématique ? Toutes les questions associées seront également supprimées."
+                },
+                class: "rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500" %>
+          <%= link_to "Retour", backoffice_themes_path,
+                class: "rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme Info -->
+    <div class="mb-8 rounded-lg bg-white shadow dark:bg-gray-800">
+      <div class="px-6 py-4">
+        <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Informations</h2>
+        <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+          <div>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Numéro</dt>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-white"><%= @theme.number %></dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nom</dt>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-white"><%= @theme.name %></dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Statut</dt>
+            <dd class="mt-1">
+              <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset
+                <%= @theme.active? ? 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20' : 'bg-gray-50 text-gray-600 ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20' %>">
+                <%= @theme.active? ? 'Actif' : 'Inactif' %>
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nombre de questions</dt>
+            <dd class="mt-1 text-sm text-gray-900 dark:text-white"><%= @theme.questions.count %></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- Questions Section -->
+    <div class="rounded-lg bg-white shadow dark:bg-gray-800">
+      <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-medium text-gray-900 dark:text-white">Questions</h2>
+          <%= link_to "Nouvelle question", new_backoffice_theme_question_path(@theme),
+                class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+        </div>
+      </div>
+      
+      <div class="px-6 py-4">
+        <% if @theme.questions.any? %>
+          <div class="space-y-4">
+            <% @theme.questions.each do |question| %>
+              <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg dark:border-gray-700">
+                <div class="flex-1">
+                  <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-800 text-sm font-medium dark:bg-indigo-900 dark:text-indigo-200">
+                      <%= question.position || '?' %>
+                    </span>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900 dark:text-white">
+                        <%= question.label %>
+                      </p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">
+                        <%= question.active? ? 'Active' : 'Inactive' %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <%= link_to "Modifier", edit_backoffice_theme_question_path(@theme, question),
+                        class: "text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm" %>
+                  <%= link_to "Supprimer", backoffice_theme_question_path(@theme, question),
+                        data: { 
+                          "turbo-method": "delete",
+                          "turbo-confirm": "Êtes-vous sûr de vouloir supprimer cette question ?"
+                        },
+                        class: "text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 text-sm" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-12">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">Aucune question</h3>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Commencez par créer votre première question pour cette thématique.</p>
+            <div class="mt-6">
+              <%= link_to "Nouvelle question", new_backoffice_theme_question_path(@theme),
+                    class: "inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

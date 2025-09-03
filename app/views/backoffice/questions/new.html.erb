@@ -1,2 +1,12 @@
-<h1>Admin::Questions#new</h1>
-<p>Find me in app/views/admin/questions/new.html.erb</p>
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-2xl">
+    <div class="mb-8">
+      <h1 class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Nouvelle Question</h1>
+      <p class="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
+        Ajouter une nouvelle question à la thématique "<%= @theme.name %>".
+      </p>
+    </div>
+
+    <%= render 'form', question: @question %>
+  </div>
+</div>

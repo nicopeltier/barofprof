@@ -79,3 +79,5 @@ gem "prawn", "~> 2.5"
 gem "prawn-table", "~> 0.2.2"
 
 gem "rack-attack", "~> 6.7"
+
+gem "letter_opener", "~> 1.10", group: :development

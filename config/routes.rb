@@ -27,6 +27,9 @@ Rails.application.routes.draw do
     resources :message_templates
   end
   
+  # Route pour arrêter l'impersonate depuis n'importe où
+  delete :stop_impersonating, to: 'backoffice/schools#stop_impersonating_global'
+  
   # Espace directeur
   # (si tu fais simple avec current_school il n'est pas nécessaire de nester sous :schools)
   resources :surveys, only: [ :new, :create, :show ] do
@@ -42,6 +45,13 @@ Rails.application.routes.draw do
     collection do
       post :import
       get  :import_preview
+    end
+  end
+  
+  resources :school_directors, only: [:index, :new, :create, :edit, :update, :destroy] do
+    member do
+      post :invite
+      post :resend_invitation
     end
   end
   

@@ -63,7 +63,7 @@
                       <%= link_to "Modifier", edit_backoffice_school_path(school),
                             class: "text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" %>
                       <%= link_to "Se connecter", impersonate_backoffice_school_path(school),
-                            method: :post,
+                            data: { "turbo-method": "post" },
                             class: "text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300" %>
                       <%= link_to "Supprimer", backoffice_school_path(school),
                             method: :delete,
