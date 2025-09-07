@@ -94,3 +94,19 @@ fr:
       default: "%d/%m/%Y"
       short: "%d %b"
       long: "%d %B %Y"
+
+  # Devise - Formulaires
+  devise:
+    registrations:
+      edit:
+        title: "Modifier mon compte"
+        email: "Adresse email"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
+        current_password: "Mot de passe actuel"
+        leave_blank_if_you_don_t_want_to_change_it: "Laissez vide si vous ne souhaitez pas le modifier"
+        we_need_your_current_password_to_confirm_your_changes: "Nous avons besoin de votre mot de passe actuel pour confirmer vos modifications"
+        update: "Mettre à jour"
+        cancel_my_account: "Supprimer mon compte"
+        back: "Retour"
+        unhappy: "Pas satisfait ?"

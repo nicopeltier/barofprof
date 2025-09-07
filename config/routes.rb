@@ -1,6 +1,6 @@
 # config/routes.rb
 Rails.application.routes.draw do
-  devise_for :users, skip: [:registrations]
+  devise_for :users
   
   # Page d'accueil et dashboard directeur
   root to: "dashboards#index"
