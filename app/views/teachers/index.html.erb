@@ -52,6 +52,7 @@
                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-0">Nom</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Prénom</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Email</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Questionnaire</th>
                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
                   <span class="sr-only">Actions</span>
                 </th>
@@ -68,6 +69,30 @@
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">
                     <%= teacher.email %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm">
+                    <% 
+                      participation = current_survey&.participations&.find_by(teacher: teacher)
+                      if participation
+                        case participation.status
+                        when 'completed'
+                          status_text = 'Terminé'
+                          status_class = 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20'
+                        when 'in_progress'
+                          status_text = 'En cours'
+                          status_class = 'bg-yellow-50 text-yellow-700 ring-yellow-600/20 dark:bg-yellow-500/10 dark:text-yellow-400 dark:ring-yellow-500/20'
+                        else
+                          status_text = 'Pas commencé'
+                          status_class = 'bg-gray-50 text-gray-600 ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20'
+                        end
+                      else
+                        status_text = 'Pas commencé'
+                        status_class = 'bg-gray-50 text-gray-600 ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20'
+                      end
+                    %>
+                    <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <%= status_class %>">
+                      <%= status_text %>
+                    </span>
                   </td>
                   <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                     <% if survey_blocked %>

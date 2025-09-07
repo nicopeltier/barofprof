@@ -33,8 +33,28 @@ class SurveysController < ApplicationController
 
 
     def remind
-      # ReminderJob.perform_later(@survey.id)
-      redirect_to school_survey_path(@school, @survey), notice: "Relances en file"
+      # Trouver les professeurs qui n'ont pas terminé le questionnaire
+      incomplete_participations = @survey.participations.joins(:teacher)
+                                         .where.not(status: 'completed')
+      
+      reminder_count = 0
+      
+      # Envoyer les emails de relance
+      incomplete_participations.find_each do |participation|
+        SurveyMailer.reminder(participation.teacher, @survey).deliver_now
+        
+        # Enregistrer la relance dans les logs
+        participation.delivery_logs.create!(
+          channel: :email,
+          status: :sent,
+          message_type: :reminder,
+          sent_at: Time.current
+        )
+        
+        reminder_count += 1
+      end
+      
+      redirect_to dashboard_path, notice: "#{reminder_count} emails ont été envoyés aux professeurs n'ayant pas encore répondu"
     end
 
 
